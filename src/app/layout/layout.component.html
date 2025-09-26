@@ -1,0 +1,26 @@
+<div class="app-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2 class="logo">Medical Inventory</h2>
+    <nav>
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/inventory/list" routerLinkActive="active">Inventory List</a>
+      <a routerLink="/inventory/add" routerLinkActive="active">Add Item</a>
+      <a routerLink="/login" routerLinkActive="active">Logout</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Header -->
+    <header class="header">
+      <h1>Welcome to Medical Inventory System</h1>
+    </header>
+
+    <!-- Routed pages -->
+    <section class="content">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>
+
