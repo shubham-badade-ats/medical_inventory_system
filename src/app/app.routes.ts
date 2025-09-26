@@ -11,10 +11,10 @@ import { InventoryListComponent } from './inventory/inventory-list/inventory-lis
 import { AddItemComponent } from './inventory/add-item/add-item.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: HomeComponent, canActivate: [authGuard] },
+//   { path: '', redirectTo: 'login', pathMatch: 'full' },
+//   { path: 'login', component: LoginComponent },
+//   { path: 'register', component: RegisterComponent },
+//   { path: 'dashboard', component: HomeComponent },
    {
     path: '',
     component: LayoutComponent,

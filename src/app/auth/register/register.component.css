@@ -17,7 +17,7 @@
 .register-container form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .register-container label {
@@ -32,7 +32,7 @@
 }
 
 .register-container button {
-  margin-top: 10px;
+  margin-top: 15px;
   padding: 10px;
   background: #43a047;
   color: white;
@@ -43,4 +43,19 @@
 
 .register-container button:hover {
   background: #2e7d32;
+}
+
+.redirect {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.redirect a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.redirect a:hover {
+  text-decoration: underline;
 }
