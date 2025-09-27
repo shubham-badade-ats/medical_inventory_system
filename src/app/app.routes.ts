@@ -9,10 +9,12 @@ import { LayoutComponent } from './layout/layout.component';
 import { DashboardComponent } from './dashboard/dashboard.module';
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
 import { AddItemComponent } from './inventory/add-item/add-item.component';
+import { AddOrderComponent } from './orders/add-order/add-order.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
 
 export const routes: Routes = [
-//   { path: '', redirectTo: 'login', pathMatch: 'full' },
-//   { path: 'login', component: LoginComponent },
+  // { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
 //   { path: 'register', component: RegisterComponent },
 //   { path: 'dashboard', component: HomeComponent },
    {
@@ -21,7 +23,15 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'inventory/list', component: InventoryListComponent },
-      { path: 'inventory/add', component: AddItemComponent }
+      { path: 'inventory/add', component: AddItemComponent },
+      { path: 'orders/add-order', component: AddOrderComponent},
+      { path:'orders/list', component: OrderListComponent},
+      { path: 'products', component: ProductListComponent },
+      { path: 'products/add', component: AddProductComponent },
+      { path: 'products/edit/:id', component: AddProductComponent },
+      
+
+
     ]
   },
 
