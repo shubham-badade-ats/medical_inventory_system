@@ -1,1 +1,40 @@
-<p>add-supplier works!</p>
+<mat-card class="supplier-form-card">
+  <mat-card-title>Add Supplier</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="supplierForm" (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Supplier Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter supplier name" />
+        <mat-error *ngIf="supplierForm.get('name')?.hasError('required')">
+          Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contact Number</mat-label>
+        <input matInput formControlName="contact" placeholder="Enter contact number" />
+        <mat-error *ngIf="supplierForm.get('contact')?.hasError('pattern')">
+          Must be a 10 digit number
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" placeholder="Enter email (optional)" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Address</mat-label>
+        <textarea matInput formControlName="address" placeholder="Enter supplier address"></textarea>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="supplierForm.invalid">
+          Save
+        </button>
+        <button mat-stroked-button color="warn" type="reset">Reset</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

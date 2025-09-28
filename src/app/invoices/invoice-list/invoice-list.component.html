@@ -1,0 +1,73 @@
+<mat-card>
+  <mat-card-title>Invoices</mat-card-title>
+  <mat-card-content>
+    <!-- Filters -->
+    <div class="filters">
+      <mat-form-field appearance="outline">
+        <mat-label>Customer</mat-label>
+        <input matInput [formControl]="customerFilter" placeholder="Search customer" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" [formControl]="dateFilter" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="applyFilters()">
+        Apply
+      </button>
+      <button mat-button color="warn" (click)="clearFilters()">
+        Clear
+      </button>
+    </div>
+
+    <!-- Table -->
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width-table">
+      <!-- ID -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let row"> {{ row.id }} </td>
+      </ng-container>
+
+      <!-- Customer -->
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef> Customer </th>
+        <td mat-cell *matCellDef="let row"> {{ row.customer }} </td>
+      </ng-container>
+
+      <!-- Date -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <td mat-cell *matCellDef="let row"> {{ row.date | date }} </td>
+      </ng-container>
+
+      <!-- Payment -->
+      <ng-container matColumnDef="paymentMode">
+        <th mat-header-cell *matHeaderCellDef> Payment </th>
+        <td mat-cell *matCellDef="let row"> {{ row.paymentMode }} </td>
+      </ng-container>
+
+      <!-- Total -->
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef> Total </th>
+        <td mat-cell *matCellDef="let row"> {{ row.total | currency:'INR' }} </td>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" (click)="viewInvoice(row)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>
+<app-invoice-detail *ngIf="selectedInvoice" [invoice]="selectedInvoice"></app-invoice-detail>

@@ -15,4 +15,5 @@ export const suppliersRoutes: Routes = [
     path: 'edit/:id',
     component: SupplierFormComponent // edit supplier
   }
+  
 ];

@@ -33,8 +33,14 @@ export const routes: Routes = [
   {
   path: 'suppliers',
   loadChildren: () =>
-    import('./suppliers/suppliers.module').then(m => m.SuppliersModule)
+    import('./suppliers/suppliers.routes').then(m => m.suppliersRoutes)
 },
+
+ {
+    path: 'invoices',
+    loadChildren: () =>
+      import('./invoices/invoices.routes').then(m => m.invoicesRoutes)
+  },
       { path: 'inventory/list', component: InventoryListComponent },
       { path: 'inventory/add', component: AddItemComponent },
       { path: 'orders/add-order', component: AddOrderComponent },

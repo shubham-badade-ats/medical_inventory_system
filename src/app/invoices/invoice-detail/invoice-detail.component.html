@@ -1,0 +1,49 @@
+<mat-card *ngIf="invoice">
+  <mat-card-title>Invoice #{{ invoice.id }}</mat-card-title>
+  <mat-card-subtitle>
+    <strong>Customer:</strong> {{ invoice.customer }} <br />
+    <strong>Date:</strong> {{ invoice.date | date:'shortDate' }} <br />
+    <strong>Payment:</strong> {{ invoice.paymentMode }}
+  </mat-card-subtitle>
+
+  <mat-card-content>
+    <table mat-table [dataSource]="invoice.items" class="mat-elevation-z8 full-width-table">
+      <!-- Medicine -->
+      <ng-container matColumnDef="medicineName">
+        <th mat-header-cell *matHeaderCellDef> Medicine </th>
+        <td mat-cell *matCellDef="let item"> {{ item.medicineName }} </td>
+      </ng-container>
+
+      <!-- Price -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let item"> {{ item.price | currency:'INR' }} </td>
+      </ng-container>
+
+      <!-- Quantity -->
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef> Qty </th>
+        <td mat-cell *matCellDef="let item"> {{ item.quantity }} </td>
+      </ng-container>
+
+      <!-- Subtotal -->
+      <ng-container matColumnDef="subtotal">
+        <th mat-header-cell *matHeaderCellDef> Subtotal </th>
+        <td mat-cell *matCellDef="let item"> {{ item.subtotal | currency:'INR' }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <div class="total">
+      <h3>Total: {{ invoice.total | currency:'INR' }}</h3>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-raised-button color="primary" (click)="printInvoice()">
+      <mat-icon>print</mat-icon> Print
+    </button>
+  </mat-card-actions>
+</mat-card>
