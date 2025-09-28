@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LayoutComponent } from './layout/layout.component';
@@ -11,6 +11,7 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { AddProductComponent } from './products/add-product/add-product.component';
 import { authGuard } from './auth/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -23,6 +24,17 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: 'dashboard', component: DashboardComponent },
+       {
+    path: 'medicines',
+    loadChildren: () =>
+      import('./medicines/medicines.routes').then(m => m.MEDICINES_ROUTES)
+  },
+
+  {
+  path: 'suppliers',
+  loadChildren: () =>
+    import('./suppliers/suppliers.module').then(m => m.SuppliersModule)
+},
       { path: 'inventory/list', component: InventoryListComponent },
       { path: 'inventory/add', component: AddItemComponent },
       { path: 'orders/add-order', component: AddOrderComponent },
@@ -33,6 +45,11 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' } // 👈 default route
     ]
   },
+  // {
+  //   path: 'medicines',
+  //   loadChildren: () =>
+  //     import('./medicines/medicines.routes').then(m => m.MEDICINES_ROUTES)
+  // },
 
   // Guarded routes (optional, can remove duplicates if already inside children)
   { path: 'products', component: ProductListComponent, canActivate: [authGuard] },

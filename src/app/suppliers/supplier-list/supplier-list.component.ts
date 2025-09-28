@@ -1,12 +1,62 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { SupplierService } from '../supplier.service';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-supplier-list',
-  standalone: true,
-  imports: [],
   templateUrl: './supplier-list.component.html',
-  styleUrl: './supplier-list.component.scss'
+  styleUrls: ['./supplier-list.component.css'],
+  standalone: true,
+  imports: [CommonModule, MatIconModule,CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule]
 })
-export class SupplierListComponent {
+export class SupplierListComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'contact', 'email', 'actions'];
+  dataSource = new MatTableDataSource<any>([]);
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  constructor(private supplierService: SupplierService) {}
+
+  ngOnInit(): void {
+    this.loadSuppliers();
+  }
+
+  loadSuppliers() {
+    this.supplierService.getSuppliers().subscribe((data) => {
+      console.log('Suppliers fetched:', data);
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
+
+  onAddSupplier() {
+    console.log('Add supplier clicked');
+  }
+
+  onEditSupplier(supplier: any) {
+    console.log('Edit supplier:', supplier);
+  }
+
+  onDeleteSupplier(supplier: any) {
+    console.log('Delete supplier:', supplier);
+  }
 }

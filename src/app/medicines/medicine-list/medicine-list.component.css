@@ -1,0 +1,19 @@
+.medicine-list-container {
+  padding: 1.5rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.search-bar {
+  width: 300px;
+  margin-bottom: 1rem;
+}
+
+table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}

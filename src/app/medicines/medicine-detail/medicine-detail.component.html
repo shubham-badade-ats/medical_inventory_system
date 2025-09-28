@@ -1,0 +1,16 @@
+<mat-card class="detail-card" *ngIf="medicine">
+  <mat-card-header>
+    <mat-card-title>{{ medicine.name }}</mat-card-title>
+    <mat-card-subtitle>{{ medicine.category }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p><strong>Stock:</strong> {{ medicine.stock }}</p>
+    <p><strong>Price:</strong> ₹{{ medicine.price }}</p>
+    <p><strong>Expiry Date:</strong> {{ medicine.expiryDate | date }}</p>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-button color="primary" (click)="close()">Close</button>
+  </mat-card-actions>
+</mat-card>
