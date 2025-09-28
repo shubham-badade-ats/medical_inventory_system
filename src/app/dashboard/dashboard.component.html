@@ -1,7 +1,29 @@
 <div class="dashboard">
-  <h1>Medical Inventory Dashboard</h1>
-  <nav>
-    <a routerLink="/inventory/list">View Inventory</a> |
-    <a routerLink="/inventory/add">Add Item</a>
-  </nav>
+  <mat-card class="dashboard-card">
+    <mat-card-title>Inventory Status</mat-card-title>
+    <mat-card-content>
+      <canvas baseChart
+        [data]="inventoryData"
+        [options]="chartOptions"
+        [type]="'pie'">
+      </canvas>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="stats">
+    <mat-card class="stat-card">
+      <mat-card-title>Total Medicines</mat-card-title>
+      <mat-card-content>120</mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-title>Total Orders</mat-card-title>
+      <mat-card-content>56</mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-title>Total Suppliers</mat-card-title>
+      <mat-card-content>14</mat-card-content>
+    </mat-card>
+  </div>
 </div>
