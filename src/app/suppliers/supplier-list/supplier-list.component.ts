@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-supplier-list',
@@ -28,15 +29,19 @@ export class SupplierListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private supplierService: SupplierService) {}
+  constructor(private supplierService: SupplierService, private router: Router,private supplierservice:SupplierService) {}
 
   ngOnInit(): void {
     this.loadSuppliers();
   }
 
   loadSuppliers() {
+
+  
     this.supplierService.getSuppliers().subscribe((data) => {
       console.log('Suppliers fetched:', data);
+
+      console.log('jwttoken'+JSON.stringify(localStorage.getItem('jwtToken')));
       this.dataSource.data = data;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -48,8 +53,8 @@ export class SupplierListComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  onAddSupplier() {
-    console.log('Add supplier clicked');
+  addSupplier() {
+    this.supplierservice.
   }
 
   onEditSupplier(supplier: any) {

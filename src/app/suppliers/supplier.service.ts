@@ -21,7 +21,7 @@ export class SupplierService {
   constructor(private http: HttpClient) {}
     // 🔹 Get all suppliers
   getSuppliers(): Observable<Supplier[]> {
-    return this.http.get<Supplier[]>(this.apiUrl);
+    return this.http.get<Supplier[]>(`${this.apiUrl}`);
   }
 
   getAll(): Observable<Supplier[]> {
