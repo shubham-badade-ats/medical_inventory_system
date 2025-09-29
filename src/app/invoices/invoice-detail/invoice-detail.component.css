@@ -1,11 +1,21 @@
-.full-width-table {
+.invoice-table {
   width: 100%;
-  margin-top: 20px;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.invoice-table th,
+.invoice-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.invoice-table th {
+  background-color: #f4f4f4;
 }
 
 .total {
-  text-align: right;
   margin-top: 15px;
+  font-size: 18px;
   font-weight: bold;
-  font-size: 1.2em;
 }

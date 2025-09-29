@@ -10,8 +10,17 @@
     </button>
   </mat-form-field>
 
+  <button mat-raised-button color="primary" (click)="onAddMedicine()">
+      <mat-icon>add</mat-icon> Add Medicine
+    </button>
+  
+
   <!-- Table -->
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="srNo">
+    <th mat-header-cell *matHeaderCellDef>Sr. No.</th>
+    <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+  </ng-container>
 
     <!-- ID -->
     <ng-container matColumnDef="id">
@@ -25,16 +34,16 @@
       <td mat-cell *matCellDef="let medicine">{{ medicine.name }}</td>
     </ng-container>
 
-    <!-- Category -->
-    <ng-container matColumnDef="category">
-      <th mat-header-cell *matHeaderCellDef>Category</th>
-      <td mat-cell *matCellDef="let medicine">{{ medicine.category }}</td>
+    <!-- Brand -->
+    <ng-container matColumnDef="brand">
+      <th mat-header-cell *matHeaderCellDef>Brand</th>
+      <td mat-cell *matCellDef="let medicine">{{ medicine.brand }}</td>
     </ng-container>
 
-    <!-- Stock -->
-    <ng-container matColumnDef="stock">
+    <!-- Quantity -->
+    <ng-container matColumnDef="quantity">
       <th mat-header-cell *matHeaderCellDef>Stock</th>
-      <td mat-cell *matCellDef="let medicine">{{ medicine.stock }}</td>
+      <td mat-cell *matCellDef="let medicine">{{ medicine.quantity }}</td>
     </ng-container>
 
     <!-- Price -->

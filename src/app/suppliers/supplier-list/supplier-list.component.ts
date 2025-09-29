@@ -53,8 +53,8 @@ export class SupplierListComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  addSupplier() {
-    this.supplierservice.
+  onAddSupplier() {
+    this.router.navigate(['/suppliers/add']);
   }
 
   onEditSupplier(supplier: any) {

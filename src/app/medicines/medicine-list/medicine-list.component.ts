@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -9,14 +9,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MedicinesService, Medicine } from '../medicines.service';
+import { Router } from '@angular/router';
 
-export interface Medicine {
-  id: number;
-  name: string;
-  category: string;
-  stock: number;
-  price: number;
-}
+// export interface Medicine {
+//   id: number;
+//   name: string;
+//   category: string;
+//   stock: number;
+//   price: number;
+// }
 
 @Component({
   selector: 'app-medicine-list',
@@ -33,13 +35,32 @@ export interface Medicine {
   templateUrl: './medicine-list.component.html',
   styleUrls: ['./medicine-list.component.css']
 })
-export class MedicineListComponent {
-  displayedColumns: string[] = ['id', 'name', 'category', 'stock', 'price', 'actions'];
-  dataSource = new MatTableDataSource<Medicine>([
-    { id: 1, name: 'Paracetamol', category: 'Tablet', stock: 120, price: 25 },
-    { id: 2, name: 'Amoxicillin', category: 'Capsule', stock: 50, price: 80 },
-    { id: 3, name: 'Cough Syrup', category: 'Syrup', stock: 30, price: 120 },
-  ]);
+export class MedicineListComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'name', 'brand', 'quantity', 'price', 'actions'];
+
+  dataSource = new MatTableDataSource<Medicine>();
+
+  constructor(private medicineService: MedicinesService, private router:Router) {}
+
+  ngOnInit(): void {
+    this.loadMedicines();
+  }
+
+  loadMedicines() {
+    this.medicineService.getAll().subscribe({
+      next: (data) => this.dataSource.data = data,
+      error: (err) => console.error('Error fetching medicines:', err)
+    });
+  }
+
+  onAddMedicine() {
+    // Navigate to add medicine form
+    console.log('Navigate to add medicine form');
+    
+    this.router.navigate(['/medicines/add']);
+    
+
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
@@ -48,9 +69,16 @@ export class MedicineListComponent {
 
   onEdit(id: number) {
     console.log('Edit medicine with id:', id);
+    this.router.navigate(['/medicines/add']);
+    // TODO: open dialog / navigate to edit form
   }
 
   onDelete(id: number) {
-    console.log('Delete medicine with id:', id);
+    if (confirm('Are you sure you want to delete this medicine?')) {
+      this.medicineService.delete(id).subscribe({
+        next: () => this.loadMedicines(),
+        error: (err) => console.error('Error deleting medicine:', err)
+      });
+    }
   }
 }

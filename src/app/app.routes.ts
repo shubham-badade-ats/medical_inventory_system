@@ -14,6 +14,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' } ,
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
     // { path: 'inventory/list', component: InventoryListComponent },
@@ -41,6 +42,8 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./invoices/invoices.routes').then(m => m.invoicesRoutes)
   },
+  { path: 'customers', loadChildren: () => import('./customers/customers.routes').then(m => m.CUSTOMER_ROUTES) }
+,
       { path: 'inventory/list', component: InventoryListComponent },
       { path: 'inventory/add', component: AddItemComponent },
       { path: 'orders/add-order', component: AddOrderComponent },
@@ -48,15 +51,10 @@ export const routes: Routes = [
       { path: 'products', component: ProductListComponent },
       { path: 'products/add', component: AddProductComponent },
       { path: 'products/edit/:id', component: AddProductComponent },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' } // 👈 default route
+      
     ]
   },
-  // {
-  //   path: 'medicines',
-  //   loadChildren: () =>
-  //     import('./medicines/medicines.routes').then(m => m.MEDICINES_ROUTES)
-  // },
-
+ 
   // Guarded routes (optional, can remove duplicates if already inside children)
   { path: 'products', component: ProductListComponent, canActivate: [authGuard] },
   { path: 'products/add', component: AddProductComponent, canActivate: [authGuard] }

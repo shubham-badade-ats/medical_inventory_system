@@ -4,9 +4,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MedicinesService, Medicine } from '../medicines.service'; // ✅ import service
 
 @Component({
   selector: 'app-medicine-form',
@@ -16,35 +14,47 @@ import { MatNativeDateModule } from '@angular/material/core';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule
+    MatButtonModule
   ],
   templateUrl: './medicine-form.component.html',
   styleUrls: ['./medicine-form.component.css']
 })
 export class MedicineFormComponent {
   @Input() isEdit = false;
+  @Input() medicine?: Medicine; // for editing existing medicine
 
   medicineForm: FormGroup;
 
-  categories = ['Tablet', 'Capsule', 'Syrup', 'Injection'];
-
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private medicineService: MedicinesService) {
     this.medicineForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      category: ['', Validators.required],
-      stock: [0, [Validators.required, Validators.min(1)]],
-      price: [0, [Validators.required, Validators.min(1)]],
-      expiryDate: ['', Validators.required]
+      brand: ['', Validators.required],
+      quantity: [0, [Validators.required, Validators.min(1)]],
+      price: [0, [Validators.required, Validators.min(1)]]
     });
+  }
+
+  ngOnInit() {
+    if (this.isEdit && this.medicine) {
+      this.medicineForm.patchValue(this.medicine);
+    }
   }
 
   onSubmit() {
     if (this.medicineForm.valid) {
-      console.log('Form Submitted:', this.medicineForm.value);
-      // 🔹 Save medicine (call API here)
+      const medicineData: Medicine = this.medicineForm.value;
+
+      if (this.isEdit && this.medicine) {
+        this.medicineService.update(this.medicine.id, medicineData).subscribe({
+          next: (res) => console.log('Updated successfully', res),
+          error: (err) => console.error('Update failed', err)
+        });
+      } else {
+        this.medicineService.create(medicineData).subscribe({
+          next: (res) => console.log('Saved successfully', res),
+          error: (err) => console.error('Save failed', err)
+        });
+      }
     }
   }
 

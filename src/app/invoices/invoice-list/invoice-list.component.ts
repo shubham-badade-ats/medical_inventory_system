@@ -11,6 +11,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Invoice, InvoiceService } from '../invoice.service';
 import { MatCardModule } from '@angular/material/card';
 import { InvoiceDetailComponent } from '../invoice-detail/invoice-detail.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-list',
@@ -36,7 +37,7 @@ export class InvoiceListComponent implements OnInit {
   customerFilter = new FormControl('');
   dateFilter = new FormControl<Date | null>(null);
 
-  constructor(private invoiceService: InvoiceService) {}
+  constructor(private invoiceService: InvoiceService, private router:Router) {}
 
   ngOnInit(): void {
     this.loadInvoices();
@@ -48,6 +49,10 @@ export class InvoiceListComponent implements OnInit {
       error: (err) => console.error('Error loading invoices', err)
     });
   }
+  onAddInvoice() {
+    // Navigate to add invoice form
+     this.router.navigate(['/invoices/add']);
+    console.log('Navigate to add invoice form');  }
 
   applyFilters(): void {
     let filtered = [...this.dataSource];
