@@ -9,7 +9,7 @@ import { AuthService } from '../auth.service';
   standalone: true,
   imports: [
     FormsModule,
-    HttpClientModule, // <-- must be imported here
+    HttpClientModule,
     RouterModule
   ],
   templateUrl: './login.component.html',
@@ -22,13 +22,25 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
+
+    
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
-        console.log('Login successful', response);
-        localStorage.setItem('jwtToken', response.jwtToken);
-        this.router.navigate(['/dashboard']);
+        console.log('Full login response:', response);
+
+        // Adjust key based on backend field
+        const token = response?.jwtToken || response?.token || response?.jwt;
+        if (token) {
+          localStorage.setItem('jwtToken', token);
+          console.log('Token stored successfully.');
+          this.router.navigate(['/dashboard']);
+        } else {
+          console.error('No token found in response.');
+          alert('Login failed: No token received from server.');
+        }
       },
       error: (err) => {
+        console.error('Login error:', err);
         if (err.status === 401 || err.status === 400) {
           alert('Invalid credentials!');
         } else if (err.status === 404) {

@@ -36,4 +36,25 @@ export class AuthService {
   isAuthenticated(): boolean {
     return this.isLoggedIn;
   }
+
+
+   refreshAccessToken(): Observable<any> {
+    const refreshToken = localStorage.getItem('refreshToken');
+    return this.http.post(`${this.baseUrl}/refresh`, { refreshToken }).pipe(
+      tap((res: any) => {
+        localStorage.setItem('accessToken', res.accessToken);
+      })
+    );
+  }
+
+    isTokenExpired(token: string): boolean {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return Date.now() >= payload.exp * 1000;
+    } catch {
+      return true;
+    }
+  }
+
+
 }

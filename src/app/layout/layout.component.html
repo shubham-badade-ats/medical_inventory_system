@@ -13,7 +13,8 @@
       <a routerLink="/suppliers" routerLinkActive="active">Suppliers</a>
        <a routerLink="/invoices" routerLinkActive="active">invoices</a>
       
-      <a routerLink="/login" routerLinkActive="active">Logout</a>
+      <a routerLink="/login" (click)="localStorage.removeItem('jwtToken')">Logout</a>
+
     </nav>
   </aside>
 
