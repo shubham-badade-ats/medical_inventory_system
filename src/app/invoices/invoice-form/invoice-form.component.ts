@@ -113,38 +113,49 @@ updateQuantity(item: any) {
 
 
 
-  onSubmit(): void {
-    if (this.invoiceForm.valid) {
-      const raw = this.invoiceForm.getRawValue();
+onSubmit(): void {
+  if (this.invoiceForm.valid) {
+    const raw = this.invoiceForm.getRawValue();
 
-      const items: SoldProduct[] = raw.items.map((item: any) => ({
-        medicineId: this.getMedicineId(item.medicine),
-        medicineName: item.medicine,
-        price: item.price,
-        quantity: item.quantity,
-        subtotal: item.price * item.quantity
-      }));
+    const soldProducts = raw.items.map((item: any) => ({
+      medicine: { id: this.getMedicineId(item.medicine) },
+      quantity: item.quantity,
+      price: item.price
+    }));
 
-      const invoice: Invoice = {
-        customer: raw.customer,
-        date: new Date(raw.date).toISOString(),
-        paymentMode: raw.paymentMode,
-        total: this.getTotal(),
-        items
-      };
+    const invoice = {
+      customer: { id: this.getCustomerId(raw.customer) },
+      date: raw.date,
+      paymentMode: raw.paymentMode
+    };
 
-      this.invoiceService.create(invoice).subscribe({
-        next: (res) => {
-          alert('Invoice created successfully ✅');
-          console.log(res);
-          this.invoiceForm.reset({ date: new Date(), items: [] });
-          this.addItem();
-        },
-        error: (err) => {
-          console.error('Error saving invoice:', err);
-          alert('Failed to save invoice ❌');
-        }
-      });
-    }
+    const requestBody = {
+      invoice,
+      soldProducts
+    };
+
+    this.invoiceService.create(requestBody as any).subscribe({
+      next: (res) => {
+        alert('Invoice created successfully ✅');
+        console.log(res);
+        this.invoiceForm.reset({ date: new Date(), items: [] });
+        this.addItem();
+      },
+      error: (err) => {
+        console.error('Error saving invoice:', err);
+        alert('Failed to save invoice ❌');
+      }
+    });
   }
+}
+
+getCustomerId(customer: any): number {
+  if (!customer) return 0;
+  if (typeof customer === 'object' && customer.id) {
+    return customer.id;
+  }
+  return 1; // fallback
+}
+
+
 }

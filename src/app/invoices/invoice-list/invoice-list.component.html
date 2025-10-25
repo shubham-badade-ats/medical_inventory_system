@@ -3,10 +3,26 @@
   <mat-card-content>
     <!-- Filters -->
     <div class="filters">
-      <mat-form-field appearance="outline">
-        <mat-label>Customer</mat-label>
-        <input matInput [formControl]="customerFilter" placeholder="Search customer" />
-      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+  <mat-label>Customer</mat-label>
+  <input
+    type="text"
+    matInput
+    placeholder="Search customer"
+    [formControl]="customerFilter"
+    [matAutocomplete]="auto"
+  />
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    [displayWith]="displayCustomerName"
+    (optionSelected)="onCustomerSelected($event.option.value)"
+  >
+    <mat-option *ngFor="let customer of filteredCustomers" [value]="customer">
+      {{ customer.name }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+
 
       <mat-form-field appearance="outline">
         <mat-label>Date</mat-label>

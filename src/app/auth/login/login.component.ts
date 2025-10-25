@@ -22,21 +22,29 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    this.authService.login(this.username, this.password).subscribe({
-      next: (response) => {
-        console.log('Login successful', response);
-        localStorage.setItem('jwtToken', response.jwtToken);
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        if (err.status === 401 || err.status === 400) {
-          alert('Invalid credentials!');
-        } else if (err.status === 404) {
-          alert('User not found!');
-        } else {
-          alert('Something went wrong!');
-        }
+  this.authService.login(this.username, this.password).subscribe({
+    next: (response) => {
+      console.log('Login successful', response);
+      localStorage.setItem('jwtToken', response.jwtToken);
+      this.router.navigate(['/dashboard']);
+    },
+    error: (err) => {
+      console.error('Login error:', err);
+
+      let message = 'Something went wrong!';
+
+      // Try to extract meaningful messages from known error formats
+      if (err?.error?.message) {
+        message = err.error.message;
+      } else if (err?.message) {
+        message = err.message;
+      } else if (typeof err === 'string') {
+        message = err;
       }
-    });
-  }
+
+      alert(message);
+    }
+  });
+}
+
 }

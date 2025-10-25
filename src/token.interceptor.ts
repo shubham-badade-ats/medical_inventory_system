@@ -2,9 +2,9 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = localStorage.getItem('jwtToken'); // ✅ match login storage key
+  const token = localStorage.getItem('jwtToken'); 
 
-  debugger
+  
 
   if (token) {
     const cloned = req.clone({

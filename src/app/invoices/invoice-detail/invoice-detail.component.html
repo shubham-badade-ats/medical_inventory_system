@@ -1,13 +1,15 @@
 <mat-card *ngIf="invoice">
   <mat-card-title>Invoice #{{ invoice.id }}</mat-card-title>
   <mat-card-subtitle>
-    <strong>Customer:</strong> {{ invoice.customer }} <br />
-    <strong>Date:</strong> {{ invoice.date | date:'shortDate' }} <br />
-    <strong>Payment:</strong> {{ invoice.paymentMode }}
+     <p>
+      <strong>Customer:</strong> {{ invoice.customer.name }} <br />
+      <strong>Date:</strong> {{ invoice.date | date: 'shortDate' }} <br />
+      <strong>Payment:</strong> {{ invoice.paymentMode }}
+    </p>
   </mat-card-subtitle>
 
   <mat-card-content>
-    <table mat-table [dataSource]="invoice.items" class="mat-elevation-z8 full-width-table">
+    <table mat-table [dataSource]="invoice.soldProducts" class="mat-elevation-z8 full-width-table">
       <!-- Medicine -->
       <ng-container matColumnDef="medicineName">
         <th mat-header-cell *matHeaderCellDef> Medicine </th>

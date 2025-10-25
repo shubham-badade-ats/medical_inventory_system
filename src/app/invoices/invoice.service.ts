@@ -11,14 +11,39 @@ export interface SoldProduct {
   subtotal: number;
 }
 
+
+export interface Medicine {
+  id: number;
+  name: string;
+  batchNumber: string;
+}
+
+export interface SoldProduct {
+  id: number;
+  quantity: number;
+  price: number;
+  medicine: Medicine;
+}
+
+export interface Customer {
+  id: number;
+  name: string;
+}
+
 export interface Invoice {
-  id?: number;
-  customer: string;
-  date: string; // ISO format
+  id: number;
+    date: string; // ISO format
   paymentMode: string;
   total: number;
   items: SoldProduct[];
+  
+
+  
+  totalAmount: number;
+  customer: Customer;
+  soldProducts: SoldProduct[];
 }
+
 
 @Injectable({
   providedIn: 'root'

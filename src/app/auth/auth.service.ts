@@ -15,19 +15,20 @@ export class AuthService {
 
   constructor(private router: Router,private http: HttpClient) {}
 
-  login(username: string, password: string): Observable<any> {
-    const params = new HttpParams()
-      .set('userName', username)
-      .set('userPassword', password);
+  login(username: string, password: string): Observable<{ jwtToken: string }> {
+  const params = new HttpParams()
+    .set('userName', username)
+    .set('userPassword', password);
 
-    return this.http.post<any>(`${this.baseUrl}/login/authenticate`, null, { params }).pipe(
-      tap(response => {
-        if (response && response.jwtToken) {
-          localStorage.setItem('jwtToken', response.jwtToken);
-        }
-      })
-    );
-  }
+  return this.http.post<{ jwtToken: string }>(`${this.baseUrl}/login/authenticate`, null, { params }).pipe(
+    tap(response => {
+      if (response && response.jwtToken) {
+        localStorage.setItem('jwtToken', response.jwtToken);
+      }
+    })
+  );
+}
+
   logout(): void {
     this.isLoggedIn = false;
     this.router.navigate(['/login']);
